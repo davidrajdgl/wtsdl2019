@@ -1,0 +1,250 @@
+\documentclass[12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb, csquotes}
+
+\usepackage{enumitem, enumerate} % to control the manual enumerations dynamically
+
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{needspace} %to make sure that no pagebreaks in certain situations
+\usepackage{setspace}
+\usepackage{blindtext}
+%%%%%%%------------------------------------------------
+%%%%%%-----------Page Layout Setups------
+%%%%%%--------------------------------------------------
+\usepackage{geometry}
+\geometry{
+	headheight=6ex,
+	includehead,
+	includefoot
+}
+\geometry{
+	paper=a4paper,% Change to letterpaper for US letter
+	inner=1in, % Inner margin
+	outer=1in, % Outer margin
+	bindingoffset=1cm, % Binding offset
+	top=1in, % Top margin
+	bottom=1in, % Bottom margin
+	%showframe,% show how the type block is set on the page
+}
+\renewcommand{\baselinestretch}{1.5} % for line spacing
+\usepackage{fancyhdr}%for the header and footer
+\usepackage{emptypage}%to remove headers and footers in the blank pages	
+
+\pagestyle{fancy} %Initiates the Page Style
+
+
+
+
+%%%%%%-----------------------------------------------
+%%%%%%------------ Font Set up --------------
+%%%%%%-----------------------------------------------
+%\usepackage{fouriernc}
+%\usepackage{newtxtext,newtxmath}
+%\usepackage[T1]{fontenc} 
+%\usepackage{mathdesign}
+%\usepackage{mathptmx}
+%\usepackage{utopia}
+\usepackage{times} %Use this for Times New Roman
+%\usepackage{helvet}
+%\usepackage{lmodern}
+
+%%%%%%------------------------------------------------
+% % % %-----------------For the graphics-------
+%%%%%%------------------------------------------------
+\usepackage{graphicx}
+\usepackage{subcaption}
+\graphicspath{{./images/}}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor} % for colors
+\usepackage{float}
+\usepackage{tikz}
+
+
+%%%% Highlighter-----------------------------------------------
+\makeatletter
+\newcommand{\hl}[1]{%
+	\setbox\@tempboxa\hbox{#1}%
+	\ifdim\wd\@tempboxa>\linewidth
+	\noindent
+	\colorbox{pink}{%
+		\parbox{\dimexpr\linewidth-2\fboxsep}{#1}%
+	}%
+	\else
+	\colorbox{pink}{#1}%
+	\fi}%Highlighter.
+\makeatother
+% % % % % % % %---------------------------------------
+% % % % % % % %-------BibLatex------------------------
+% % % % % % % %---------------------------------------
+\usepackage[backend=biber,  mincitenames=1, maxcitenames = 1, maxbibnames=6, defernumbers=true,natbib=true, sorting=none,  style = ieee,  url = false, doi = false]{biblatex}
+% \addbibresource{../../../main.bib}
+% \addbibresource{../../../conference.bib}
+
+
+%%%%%------------------------------------------------
+%%%%%-----------Hyperlinks Setup---------------------
+%%%%%------------------------------------------------
+\usepackage{nameref}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=sec,
+	filecolor=red,      
+	urlcolor=sec,
+	citecolor = sec
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\addto\extrasenglish{%
+	\renewcommand{\chapterautorefname}{Chapter}%
+}
+\addto\extrasenglish{%
+	\renewcommand{\sectionautorefname}{Section}%
+}
+
+
+
+
+%%%%%------------------------------------------------
+%%%%%-----------Title format-------------------------
+%%%%%------------------------------------------------
+
+\usepackage{etoolbox}
+%\makeatletter
+%\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+%\makeatother
+
+\newcommand{\Hrule}{\rule{\linewidth}{1mm}}
+
+
+
+\usepackage[explicit]{titlesec}
+\usepackage[titletoc]{appendix}
+\definecolor{sec}{HTML}{154360}
+\definecolor{band}{HTML}{EE9C52}
+
+
+\makeatletter
+\newcommand{\setappendix}{Appendix~\thechapter}
+\newcommand{\setchapter}{Chapter~\thechapter~} 
+\titleformat{\chapter}[display]{\sffamily\bfseries \huge\color{sec}}{}{0.5ex} %
+{\ifnum\pdfstrcmp{\@currenvir}{appendices}=0
+	\setappendix
+	\else
+	\setchapter
+	\fi 
+	\filleft \\%
+	\titlerule[1pt]
+	\vspace{1ex}%
+#1\filleft\\
+	\vspace{1ex}%
+	\titlerule[3pt]}
+
+\titleformat{name=\chapter, numberless}[display]{ \color{sec}\sffamily\bfseries\huge}{ }{0.5ex} %
+{ \titlerule[1pt]
+	\vspace{1ex}%
+	#1\filleft
+	\addcontentsline{toc}{chapter}{#1}
+	\markboth{}{#1}\\
+	\vspace{1ex}%
+	\titlerule[3pt]}
+\makeatother
+
+\titlespacing*{\chapter}{0ex}{-10ex}{0ex}
+
+\titleformat{\section}{\Large\bfseries}{}{0.0ex} %
+{\sffamily\color{sec} \thesection~#1 \filright}[\smallskip]
+
+\titleformat{name = \section, numberless}{\Large\bfseries}{}{0.0ex}%
+{\sffamily\color{sec}#1\filright}[\smallskip]
+
+\titleformat{\subsection}[hang]{\sffamily\Large\bfseries}{}{0.5ex}%
+{\color{sec}\thesubsection~#1\filright}[\smallskip]
+
+\titleformat{name = \subsection, numberless}[hang] {\sffamily\Large\bfseries}{}{0.5ex}%
+{\color{sec}#1\filright}[\smallskip] 
+
+
+
+%%%%%%%%%---------------------------------------------	
+%%%%%%%%%----------New Theorems & Environments-------------------
+%%%%%%%%%---------------------------------------------
+\usepackage{amsthm}
+\usepackage{thmtools} % handles autoref efficiently
+\newtheorem{theorem}{Theorem}[chapter]  
+\newtheorem{lemma}[theorem]{Lemma}%[section]
+\newtheorem{corollary}[theorem]{Corollary}%[section]
+\newtheorem{proposition}[theorem]{Proposition}%[section]
+
+
+
+
+\theoremstyle{definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{recall}{Recall}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+
+
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+
+
+%----------------------------------------------------------------------------------------
+%	PENALTIES( for the Hypenation Problem)
+%----------------------------------------------------------------------------------------
+
+\doublehyphendemerits=10000 % No consecutive line hyphens
+\brokenpenalty=10000 % No broken words across columns/pages
+\widowpenalty=9999 % Almost no widows at bottom of page
+\clubpenalty=9999 % Almost no orphans at top of page
+\interfootnotelinepenalty=9999 % Almost never break footnotes
+
+%-----------------------------------------------------
+%%Rulers used in Title page and other pages-----------
+%-----------------------------------------------------
+\newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%%%% -----------------------------------------------------
+%%%%--------- Index ---------------------------------
+%%%% -----------------------------------------------------
+\usepackage{imakeidx}
+\makeindex[title={Subject Index},columns=1]
+\makeindex[name=a,title=\uppercase{Author Index},columns=2]
+\usepackage[font=small]{idxlayout}
+
+\makeatletter
+\newcommand\thesistitle[1]{\renewcommand\@thesistitle{#1}}
+\newcommand\@thesistitle{} % To keep default empty
+\newcommand{\printtitle}{\makeatletter \@thesistitle \makeatother} %to print the title wherever you need
+\makeatother
+
+
+
+\thesistitle{Outer inverses: Characterization and Computations}
+
+\newcommand\dedicatory[1]{
+	\clearpage 
+	\null\vfil
+	\thispagestyle{empty}
+	\begin{center}{\Large\slshape #1}\end{center}
+	\vfil\null
+}
+
+%\listfiles
+
+\begin{document}
+
+Testing...Done
+
+biblatex with biber
+
+
+\end{document}
